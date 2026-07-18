@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { useUserStore } from "../stores/userStore";
 import api from "../api/mainApi";
 import { useNavigate } from "react-router";
+import { FaUser, FaLock } from "react-icons/fa";
 
 function LoginPage() {
 
@@ -69,17 +70,18 @@ function LoginPage() {
           </g>
         </svg>
         <h1 className="font-bold text-3xl text-center mt-4">Welcome</h1>
-        <p className="text-center text-gray-500 mt-2 text-sm">
+        <p className="text-center text-gray-500 mt-2 mb-2 text-sm">
           ล็อคอินเพื่อทำการเข้าสู่ระบบเพื่อทดสอบ Frontend Dev
         </p>
         <form
           onSubmit={hdlLogin}
           className="flex flex-col justify-between gap-4"
         >
-          <div className="flex flex-col justify-between gap-6">
-            <label></label>
+          <div className="relative mx-10">
+            <FaUser className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
+
             <input
-              className="outline-1 rounded-xl text-xl p-2 mx-10 bg-gray-100"
+              className="w-full outline-1 rounded-xl text-md p-4 pl-10 bg-gray-100"
               type="text"
               name="username"
               placeholder="username"
@@ -88,10 +90,11 @@ function LoginPage() {
             />
           </div>
 
-          <div className="flex flex-col justify-between">
-            <label></label>
+          <div className="relative mx-10">
+            <FaLock className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
+
             <input
-              className="outline-1 rounded-xl text-xl p-2 mx-10"
+              className="w-full outline-1 rounded-xl text-md p-4 pl-10 bg-gray-100"
               type="password"
               name="password"
               placeholder="password"
@@ -99,12 +102,20 @@ function LoginPage() {
               onChange={hdlChange}
             />
           </div>
+
           <button className="bg-sky-700 outline-1 rounded-xl p-3 mx-10 font-semibold mt-2 cursor-pointer text-white">
             LOG IN
           </button>
-          <p className="text-center text-gray-500 mt-4">
-            Don't have any accounts?
-          </p>
+
+          <div className="flex px-16 gap-6">
+            <p className="text-gray-500 mt-4">
+              Don't have any accounts?
+            </p>
+
+            <p className="text-center mt-4">
+              Register
+            </p>
+          </div>
         </form>
       </div>
     </div>
