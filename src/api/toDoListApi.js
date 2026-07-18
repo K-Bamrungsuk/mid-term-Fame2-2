@@ -10,5 +10,6 @@ export const getAllList = async () => {
   } catch (error) {
     console.log("get To do list error", error);
     toast.error("cannot get To do lists");
+    return []
   }
 };

@@ -1,4 +1,4 @@
-import { data, Navigate, useLoaderData } from "react-router";
+import { useLoaderData } from "react-router";
 import { useUserStore } from "../stores/userStore";
 import api from "../api/mainApi";
 import { getAllList } from "../api/toDoListApi";
@@ -9,30 +9,44 @@ function ToDoListPage() {
   const token = useUserStore((state) => state.token);
   const logout = useUserStore((state) => state.logout);
   const output = useLoaderData();
-  console.log('output', output)
 
-  const [input, setInput] = useState()
+  const [todos, setToDos] = useState(output)
+  const [input, setInput] = useState("")
   
   const hdlAdd = async () => {
     try {
-        const add = await api.post("/todos/2", { content: input })
-    } catch (error){
+
+      await api.post(("todos/2"), { content: input })
+
+      const newList = await getAllList()
+
+      setToDos(newList)
+
+      setInput("")
+    } catch (error) {
       console.log(error)
     }
   }
 
+
   const hdlDelete = async (el) => {
-    try {
-      const del = await api.delete(`/todos/2/${el.id}`)
-      console.log('del.data', del.data)
-    } catch (error){
-      console.log(error)
-    }
+  try {
+    
+    await api.delete(`/todos/2/${el.id}`)
+
+    const newList = await getAllList()
+    
+    setToDos(newList)
+
+  } catch (error){
+    console.log(error)
   }
+}
+
 
   return (
     <div className="m-auto w-full h-screen bg-sky-50 flex justify-center items-center">
-      <div className="w-140 h-120 border rounded-2xl bg-white">
+      <div className="w-140 h-120 border rounded-2xl bg-white overflow-hidden">
 
         <div className="flex justify-between p-4">
           <h1 className="font-bold text-2xl mt-2 ml-10">My To do! </h1>
@@ -52,9 +66,9 @@ function ToDoListPage() {
           >Add</button>
         </div>
 
-        <div className="flex flex-col gap-5 mt-6">
+        <div className="flex flex-col gap-5 mt-6 h-70 overflow-auto">
 
-          {output.map((el, index) => (
+          {todos.map((el, index) => (
 
             <div  key={index} className="flex gap-4 mx-4 justify-between">
               <div className="flex">
